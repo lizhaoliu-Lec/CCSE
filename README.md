@@ -36,15 +36,15 @@ Note: Both datasets are annotated with the standard COCO format.
 
 ## Datasets visualization
 
-<img src="fig/CCSE-main-dataset.png" align="center" width="500px">
+<img src="fig/CCSE-main-dataset.png" align="center" width="400px">
 
 ## Datasets Statistics
 
 <img src="fig/CCSE-dataset-stat1.png" align="center" width="900px">
 
-<center class="half">
-    <img src="fig/CCSE-dataset-stat2.png" align="center" width="300px"/><img src="fig/CCSE-dataset-stat3.png" align="center" width="300px"/>
-</center>
+<img src="fig/CCSE-dataset-stat2.png" align="center" width="300px">
+
+<img src="fig/CCSE-dataset-stat3.png" align="center" width="300px">
 
 ## How to use?
 - Install required package
