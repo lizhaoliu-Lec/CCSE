@@ -1,0 +1,121 @@
+=============> comparison between one-stage and two-stage detector retina net v.s. faster rcnn
+# FCOSHandwritten GPU022 card4
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/fcos_R_50_FPN_3x_handwritten.yaml
+
+# fasterRCNNHandwritten GPU023 card1
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/faster_rcnn_R_50_FPN_3x_handwritten.yaml
+
+# CascadeRCNN GPU021 card4
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/faster_cascade_rcnn_R_50_FPN_3x_handwritten.yaml
+
+======================> Sep Line <======================
+======================> Sep Line <======================
+======================> Sep Line <======================
+======================> Sep Line <======================
+
+=============> comparison between different backbone, C4 and FPN
+# (1) different backbone
+# backboneC4fasterRCNNHandwritten GPU025 card3
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/faster_rcnn_R_50_C4_3x_handwritten.yaml
+
+# backboneR101C4fasterRCNNHandwritten GPU025 card4
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/faster_rcnn_R_101_C4_3x_handwritten.yaml
+
+# backboneR101FPNfasterRCNNHandwritten GPU023 card2
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/faster_rcnn_R_101_FPN_3x_handwritten.yaml
+
+# (2) pretrained or not
+# notPretrainedR50FPNfasterRCNNHandwritten GPU023 card3
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/faster_rcnn_R_50_notPretrained_FPN_3x_handwritten.yaml
+
+# notPretrainedR50C4fasterRCNNHandwritten GPU025 card5
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/faster_rcnn_R_50_notPretrained_C4_3x_handwritten.yaml
+
+======================> Sep Line <======================
+======================> Sep Line <======================
+======================> Sep Line <======================
+======================> Sep Line <======================
+
+=============> comparison between different anchor scale
+# fasterRCNNHandwrittenDefaultAnchor GPU022 card1
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/faster_rcnn_R_50_FPN_default_anchor_3x_handwritten.yaml
+
+# fasterRCNNHandwrittenMoreAnchor GPU022 card2
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/faster_rcnn_R_50_FPN_more_anchor_3x_handwritten.yaml
+
+# fasterRCNNHandwrittenOneAnchor GPU023 card4
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/faster_rcnn_R_50_FPN_one_anchor_3x_handwritten.yaml
+
+=============> comparison between different image resolution
+# fasterRCNNHandwrittenS1 GPU022 card0
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/faster_rcnn_R_50_FPN_s1_3x_handwritten.yaml
+
+# fasterRCNNHandwrittenS2 GPU022 card3
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/detection/faster_rcnn_R_50_FPN_s2_3x_handwritten.yaml
+
+======================> Sep Line <======================
+======================> Sep Line <======================
+======================> Sep Line <======================
+======================> Sep Line <======================
+
+============> Instance segmentation results on Handwritten
+# maskRCNNHandwritten GPU023 card0
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_handwritten.yaml
+
+# cascadeRCNNHandwritten GPU020 card1
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/instance_segmentation/mask_cascade_rcnn_R_50_FPN_3x_handwritten.yaml
+
+======================> Sep Line <======================
+======================> Sep Line <======================
+======================> Sep Line <======================
+======================> Sep Line <======================
+
+============> Instance segmentation results on Kaiti
+# maskRCNNKaiti GPU022 card0
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_kaiti.yaml
+
+# cascadeRCNNKaiti GPU021 card6
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/instance_segmentation/mask_cascade_rcnn_R_50_FPN_3x_kaiti.yaml
+
+======================> Sep Line <======================
+======================> Sep Line <======================
+======================> Sep Line <======================
+======================> Sep Line <======================
+
+==============> Cross Domain Evaluation
+# maskRCNNHW2K GPU021 card1
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/inference_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_handwritten_kaiti_test.yaml
+
+# maskRCNNK2HW GPU021 card1
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/inference_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_kaiti_handwritten_test.yaml
+
+======================> Rebuttal <============================================> Rebuttal <======================
+======================> Rebuttal <============================================> Rebuttal <======================
+======================> Rebuttal <============================================> Rebuttal <======================
+======================> Rebuttal <============================================> Rebuttal <======================
+
+====> cross font evaluation, kaiti, songti, heiti
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/inference_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_kaiti_test.yaml
+
+====> Instance segmentation results on noisy dataset
+# maskRCNNNoisyHW GPU023 card0
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_noisy_handwritten.yaml
+
+# maskRCNNNoisyKaiti GPU023 card1
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_noisy_kaiti.yaml
+
+=====> Test model on noisy dataset
+# maskRCNNKaitiNoisyTest
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/inference_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_kaiti_noisy_test.yaml
+
+# maskRCNNYHandwrittenNoisyTest
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/inference_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_handwritten_noisy_test.yaml
+
+
+======> Vis the failure case of model
+# maskRCNNKaitiFailTest
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/inference_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_kaiti_fail_test.yaml
+
+# maskRCNNHWFailTest
+PYTHONPATH=$PYTHONPATH:./ python -u scripts/inference_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_handwritten_fail_test.yaml
+

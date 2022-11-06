@@ -145,4 +145,4 @@ output/
 # terminal record
 terminal.record
 online.sh
-terminal_new.record
+#terminal_new.record
