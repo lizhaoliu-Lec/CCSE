@@ -42,9 +42,7 @@ Note: Both datasets are annotated with the standard COCO format.
 
 <div align=center><img src="fig/CCSE-dataset-stat1.png" align="center" width="900px"></div>
 
-<div align=center><img src="fig/CCSE-dataset-stat2.png" align="center" width="500px"></div>
-
-<div align=center><img src="fig/CCSE-dataset-stat3.png" align="center" width="500px"></div>
+<div align=center><img src="fig/CCSE-dataset-stat23.png" align="center" width="900px"></div>
 
 ## How to use?
 - Install required package
