@@ -62,7 +62,7 @@ db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:
-instance/
+#instance/
 .webassets-cache
 
 # Scrapy stuff:
@@ -127,3 +127,22 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# ignore ide setting
+.vscode/
+.idea/
+
+# ignore some project files
+arxived/
+tmp/
+debug/
+#config/ # upload some templates
+resources/
+
+# output files
+output/
+
+# terminal record
+terminal.record
+online.sh
+terminal_new.record

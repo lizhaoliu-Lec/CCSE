@@ -1,0 +1,61 @@
+_BASE_: "./Base-VisualizedRetinaNet.yaml"
+MODEL:
+  WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  RESNETS:
+    DEPTH: 50
+  ANCHOR_GENERATOR:
+    SIZES: !!python/object/apply:eval [ "[[x, x * 2**(1.0/3), x * 2**(2.0/3) ] for x in [ 16, 32, 64, 128, 256 ]]" ] # init
+  VISUALIZED_RETINANET:
+    # coco has 80 classes, but we only have 25 stroke classes
+    NUM_CLASSES: 25 # default 80
+DATALOADER:
+  NUM_WORKERS: 8 # default 4, too slow
+INPUT:
+  FORMAT: BGR
+  MASK_FORMAT: polygon
+  MAX_SIZE_TEST: 144
+  MAX_SIZE_TRAIN: 144
+  MIN_SIZE_TEST: 112
+  MIN_SIZE_TRAIN: [ 112, 120 ]
+SOLVER:
+  STEPS: (210000, 250000)
+  MAX_ITER: 270000
+  IMS_PER_BATCH: 4 # default 16
+  BASE_LR: 0.01  # Note that Visualized RetinaNet uses a different default learning rate
+TEST:
+  EVAL_PERIOD: 5000 # default 0, means no evaluation will be performed
+VIS_PERIOD: 5000 # default 0, means no visualization will be performed
+DATASETS:
+  # <========= print dataset ===========>
+  TRAIN: ("chinese_stroke_2021_train",)
+  TEST: ("chinese_stroke_2021_val",)
+  # <========= online dataset ===========>
+  #  TRAIN: ("chinese_online_stroke_2021_train",)
+  #  TEST: ("chinese_online_stroke_2021_val",)
+TASKS: [ "bbox" ] # Note that visualized retinanet only predict bbox and label
+# the following fields are additionally added to init the env, set output log, and register dataset...
+GPU_IDS: [ 0 ] # env related fields
+CHANNEL_INDEXES: None
+# OUTPUT_ID: visualizedRetinanet_R_50_FPN_print_stroke_anchor_scale_init # output log are other files related fields init
+# OUTPUT_ID: visualizedRetinanet_R_50_FPN_print_stroke_anchor_scale_init_pca # output log are other files related fields init pca
+OUTPUT_ID: visualizedRetinanet_R_50_FPN_print_stroke_anchor_scale_init_debug # output log are other files related fields init pca
+# dataset registration related fields
+DATA_ROOT: /tmp/binary_chinese_stroke_2021
+TRAIN_JSON_NAME: instances_train2021.json
+VAL_JSON_NAME: instances_val2021.json
+# <========= rgb print dataset ===========>
+#DATASET_NAME: chinese_stroke_2021
+#TRAIN_IMAGE_DIR: train2021
+#VAL_IMAGE_DIR: val2021
+# <========= binary print dataset ===========>
+DATASET_NAME: chinese_stroke_2021
+TRAIN_IMAGE_DIR: binarytrain2021
+VAL_IMAGE_DIR: binaryval2021
+# <========= rgb online dataset ===========>
+#DATASET_NAME: chinese_online_stroke
+#TRAIN_IMAGE_DIR: train2021
+#VAL_IMAGE_DIR: val20201
+# <========= binary online dataset ===========>
+#DATASET_NAME: chinese_online_stroke
+#TRAIN_IMAGE_DIR: binarytrain2021
+#VAL_IMAGE_DIR: binaryval2021

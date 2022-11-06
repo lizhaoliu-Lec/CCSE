@@ -1,0 +1,15 @@
+# base config as a template that contains
+# 1) output dir
+# 2) output id
+# 3) gpu visibility
+# 4) save log or not
+# 5) seed
+# 6) version (for detectron compatibility)
+OUTPUT_DIR: ./output
+OUTPUT_ID: debug_base_initializer
+GPU_IDS:
+  - 0
+  - 1
+SAVE_LOG: true
+SEED: 1234
+VERSION: 2

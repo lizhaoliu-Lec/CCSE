@@ -1,0 +1,52 @@
+_BASE_: "./Base-RCNN-FPN.yaml"
+MODEL:
+#  WEIGHTS: /mnt/cephfs/dataset/SIS_exp/liulizhao/mask_rcnn_R_50_FPN_3x_kaiti/20211205.155211/model_0244999.pth
+  WEIGHTS: /mnt/cephfs/dataset/SIS_exp/liulizhao/mask_rcnn_R_50_FPN_3x_handwritten/20220111.185301/model_0244999.pth
+  MASK_ON: True
+  RESNETS:
+    DEPTH: 50
+  ANCHOR_GENERATOR:
+    SIZES: [ [ 16 ], [ 32 ], [ 64 ], [ 128 ], [ 256 ] ]  # One size for each in feature map init
+    ASPECT_RATIOS: [ [ 0.5, 1.0, 2.0, 4.0 ] ]  # Three aspect ratios (same for all in feature maps) init
+  ROI_HEADS:
+    # coco has 80 classes, but we only have 25 stroke classes
+    NUM_CLASSES: 25 # default 80
+    SCORE_THRESH_TEST: 0.7 # for more accurately detection
+DATALOADER:
+  NUM_WORKERS: 8 # default 4, too slow
+INPUT:
+  FORMAT: BGR
+  MASK_FORMAT: polygon
+  MAX_SIZE_TEST: 144
+  MAX_SIZE_TRAIN: 144
+  MIN_SIZE_TEST: 112
+  MIN_SIZE_TRAIN: [ 112, 120 ]
+DATASETS:
+  TRAIN: ("chinese_stroke_2021_train",)
+  TEST: ("chinese_stroke_2021_val",)
+# the following fields are additionally added to init the env, set output log, and register dataset...
+GPU_IDS: [ 0 ] # env related fields
+OUTPUT_ID: mask_rcnn_R_50_FPN_3x_kaiti_test
+# dataset registration related fields
+DATA_ROOT: /mnt/cephfs/dataset/kaiti_chinese_stroke_2021
+DATASET_NAME: chinese_stroke_2021
+TRAIN_JSON_NAME: instances_test2021.json
+VAL_JSON_NAME: instances_test2021.json
+# <========= rgb test dataset ===========>
+# TRAIN_IMAGE_DIR: test2021
+# VAL_IMAGE_DIR: test2021
+# <========= binary test dataset ===========>
+TRAIN_IMAGE_DIR: train2021
+VAL_IMAGE_DIR: val2021
+VIS_DATASET_RESULT: true # whether to visualize the dataset results
+NUM_VIS_PROPOSAL: 50 # number of proposal to visualize
+# <========= put the path of any images you want to visualize here ===========>
+IMAGE_PATHS: # default None, means not visualizing
+  - 'resources/styles/hei_preprocessed.jpg'
+  - 'resources/styles/kai_preprocessed.jpg'
+  - 'resources/styles/song_preprocessed.jpg'
+  - 'resources/styles/HandwrittenChineseStroke_train_0000000005.jpg'
+  - 'resources/styles/HandwrittenChineseStroke_train_0000000009.jpg'
+  - 'resources/styles/KaitiChineseStroke_train_000000000019.jpg'
+  - 'resources/styles/KaitiChineseStroke_train_000000000020.jpg'
+  - 'resources/styles/ChineseStroke_train_000000000003_1.jpg'

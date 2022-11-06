@@ -1,0 +1,47 @@
+_BASE_: "./Base-RCNN-FPN.yaml"
+MODEL:
+  WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  MASK_ON: False
+  RESNETS:
+    DEPTH: 50
+  ANCHOR_GENERATOR:
+    SIZES: [ [ 16 ], [ 32 ], [ 64 ], [ 128 ], [ 512 ] ]  # One size for each in feature map init
+    ASPECT_RATIOS: [ [ 0.25, 0.5, 1.0, 2.0, 4.0 ] ]  # Four aspect ratios (same for all in feature maps) init
+  ROI_HEADS:
+    # coco has 80 classes, but we only have 25 stroke classes
+    NUM_CLASSES: 25 # default 80
+DATALOADER:
+  NUM_WORKERS: 8 # default 4, too slow
+INPUT:
+  FORMAT: BGR
+  MASK_FORMAT: polygon
+  MAX_SIZE_TEST: 288
+  MAX_SIZE_TRAIN: 288
+  MIN_SIZE_TEST: 224
+  MIN_SIZE_TRAIN: [ 224, 240 ]
+SOLVER:
+  STEPS: [ 210000, 250000 ] # default [210000, 250000]
+  MAX_ITER: 270000 # default 270000
+  WARMUP_ITERS: 1000 # default 1000
+  CHECKPOINT_PERIOD: 5000 # default 5000
+  IMS_PER_BATCH: 4 # default 16
+  BASE_LR: 0.02 # default 0.02
+TEST:
+  EVAL_PERIOD: 5000 # default 0, means no evaluation will be performed
+VIS_PERIOD: 5000 # default 0, means no visualization will be performed
+DATASETS:
+  TRAIN: ("chinese_stroke_2021_train",)
+  TEST: ("chinese_stroke_2021_val",)
+TASKS: [ "bbox" ] # Note that faster-rcnn only predict bbox and label
+# the following fields are additionally added to init the env, set output log, and register dataset...
+GPU_IDS: [ 0 ] # env related fields
+# output log are other files related fields
+OUTPUT_ID: faster_rcnn_R_50_FPN_s1_3x_handwritten
+OUTPUT_DIR: /mnt/cephfs/dataset/SIS_exp/liulizhao
+# dataset registration related fields
+DATA_ROOT: /mnt/cephfs/dataset/handwritten_chinese_stroke_2021
+TRAIN_JSON_NAME: instances_train2021.json
+VAL_JSON_NAME: instances_val2021.json
+DATASET_NAME: chinese_stroke_2021
+TRAIN_IMAGE_DIR: train2021
+VAL_IMAGE_DIR: val2021

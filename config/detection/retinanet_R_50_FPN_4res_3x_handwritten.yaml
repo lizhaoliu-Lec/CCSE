@@ -1,0 +1,48 @@
+_BASE_: "./Base-RetinaNet.yaml"
+MODEL:
+  WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  RESNETS:
+    DEPTH: 50
+    OUT_FEATURES: [ "res3", "res4", "res5" ]
+  FPN:
+    IN_FEATURES: [ "res3", "res4", "res5" ]
+  ANCHOR_GENERATOR:
+    # SIZES: !!python/object/apply:eval [ "[[x, x * 2**(1.0/3), x * 2**(2.0/3) ] for x in [32, 64, 128, 256, 512 ]]" ] # default
+    SIZES: !!python/object/apply:eval [ "[[x, x * 2**(1.0/3), x * 2**(2.0/3) ] for x in [ 8, 16, 32, 64, 80 ]]" ] # init
+  RETINANET:
+    # coco has 80 classes, but we only have 25 stroke classes
+    NUM_CLASSES: 25 # default 80
+    SCORE_THRESH_TEST: 0.01 # default 0.05
+    TOPK_CANDIDATES_TEST: 2000 # default 1000
+DATALOADER:
+  NUM_WORKERS: 8 # default 4, too slow
+INPUT:
+  FORMAT: BGR
+  MASK_FORMAT: polygon
+  MAX_SIZE_TEST: 144
+  MAX_SIZE_TRAIN: 144
+  MIN_SIZE_TEST: 112
+  MIN_SIZE_TRAIN: [ 112, 120 ]
+SOLVER:
+  STEPS: (210000, 250000)
+  MAX_ITER: 270000
+  IMS_PER_BATCH: 4 # default 16
+  BASE_LR: 0.005  # Note that RetinaNet uses a different default learning rate
+TEST:
+  EVAL_PERIOD: 5000 # default 0, means no evaluation will be performed
+VIS_PERIOD: 5000 # default 0, means no visualization will be performed
+DATASETS:
+  TRAIN: ("chinese_stroke_2021_train",)
+  TEST: ("chinese_stroke_2021_val",)
+TASKS: [ "bbox" ] # Note that retinanet only predict bbox and label
+# the following fields are additionally added to init the env, set output log, and register dataset...
+GPU_IDS: [ 0 ] # env related fields
+OUTPUT_ID: retinanet_R_50_FPN_4res_3x_handwritten
+OUTPUT_DIR: /mnt/cephfs/dataset/SIS_exp/liulizhao
+# dataset registration related fields
+DATA_ROOT: /mnt/cephfs/dataset/handwritten_chinese_stroke_2021
+TRAIN_JSON_NAME: instances_train2021.json
+VAL_JSON_NAME: instances_val2021.json
+DATASET_NAME: chinese_stroke_2021
+TRAIN_IMAGE_DIR: train2021
+VAL_IMAGE_DIR: val2021

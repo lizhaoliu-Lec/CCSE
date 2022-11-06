@@ -1,0 +1,22 @@
+OUTPUT_DIR: ./output
+OUTPUT_ID: vis_dataset
+GPU_IDS:
+  - 0
+
+# for offline dataset
+DATA_ROOT: /home/liulizhao/dataset/offline_handwritten_stroke_2021
+DATASET_NAME: 'offline_handwritten_stroke_2021'
+ANNOTATION_DIR: 'annotations'
+TRAIN_IMAGE_DIR: 'train2021'
+VAL_IMAGE_DIR: 'val2021'
+TRAIN_JSON_NAME: 'instances_train2021.json'
+VAL_JSON_NAME: 'instances_val2021.json'
+
+# for reference dataset
+#DATA_ROOT: /home/liulizhao/dataset/chinese_stroke_2021_reference
+#DATASET_NAME: 'chinese_stroke_2021_reference'
+#ANNOTATION_DIR: 'annotations'
+#TRAIN_IMAGE_DIR: 'train2021'
+#VAL_IMAGE_DIR: 'train2021'
+#TRAIN_JSON_NAME: 'instances_train2021.json'
+#VAL_JSON_NAME: 'instances_train2021.json'

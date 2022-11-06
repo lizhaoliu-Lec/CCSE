@@ -1,0 +1,52 @@
+_BASE_: "Base-ReferenceSparseRCNN.yaml"
+MODEL:
+  WEIGHTS: "detectron2://ImageNetPretrained/torchvision/R-50.pkl"
+  RESNETS:
+    DEPTH: 50
+    STRIDE_IN_1X1: False
+  ReferenceSparseRCNN:
+    NUM_PROPOSALS: 100
+    NUM_CLASSES: 25
+  MASK_ON: True
+  ROI_MASK_HEAD:
+    NAME: "MaskRCNNConvUpsampleHead"
+    NUM_CONV: 4
+    POOLER_RESOLUTION: 14
+  ROI_HEADS:
+    # coco has 80 classes, but we only have 25 stroke classes
+    NUM_CLASSES: 25 # default 80
+DATASETS:
+  TRAIN: ("chinese_stroke_2021_train",)
+  TEST: ("chinese_stroke_2021_val",)
+SOLVER:
+  STEPS: (210000, 250000)
+  MAX_ITER: 270000
+  IMS_PER_BATCH: 8
+INPUT:
+  MAX_SIZE_TEST: 224
+  MAX_SIZE_TRAIN: 224
+  MIN_SIZE_TEST: 112
+  MIN_SIZE_TRAIN: [ 112, 120, 144, 224 ]
+  CROP:
+    ENABLED: False
+  FORMAT: "RGB"
+TEST:
+  EVAL_PERIOD: 5000
+VIS_PERIOD: 5000 # default 0, means no visualization will be performed
+TASKS: [ "bbox", "segm" ]
+GPU_IDS: [ 4 ] # env related fields
+# output log are other files related fields
+OUTPUT_ID: reference_sparsercnn_seg_stroke_default_100pro
+# dataset registration related fields
+DATA_ROOT: /home/liulizhao/dataset/binary_offline_reference_handwritten_stroke_2021
+TRAIN_JSON_NAME: reference_instances_train2021.json
+VAL_JSON_NAME: reference_instances_val2021.json
+DATASET_NAME: chinese_stroke_2021
+TRAIN_IMAGE_DIR: binarytrain2021
+VAL_IMAGE_DIR: binaryval2021
+# dataset registration (registry for reference dataset)
+REFERENCE_DATASET_NAME: chinese_print_stroke_2021
+REFERENCE_DATA_ROOT: /home/liulizhao/dataset/chinese_stroke_2021_reference
+REFERENCE_IMAGE_DIR: train2021
+REFERENCE_JSON_NAME: instances_train2021.json
+

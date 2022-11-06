@@ -1,0 +1,60 @@
+_BASE_: "./Base-RCNN-FPN.yaml"
+MODEL:
+  # this weights only contains the pretrained backbone
+  # we can also use the whole pretrained model (including both backbone and seg/det head)
+  # from coco to improve the downstream task performance
+#  WEIGHTS: "/mnt/cephfs/dataset/SIS_exp/liulizhao/mask_rcnn_R_50_FPN_3x_kaiti/20220111.190814/model_0234999.pth"
+  WEIGHTS: "/mnt/cephfs/dataset/SIS_exp/liulizhao/mask_rcnn_R_50_FPN_3x_kaiti/20220111.185457/model_0219999.pth"
+  MASK_ON: True
+  RESNETS:
+    DEPTH: 50
+  ANCHOR_GENERATOR:
+     SIZES: [ [ 16 ], [ 32 ], [ 64 ], [ 128 ], [ 256 ] ]  # One size for each in feature map init
+     ASPECT_RATIOS: [ [ 0.5, 1.0, 2.0, 4.0 ] ]  # Three aspect ratios (same for all in feature maps) init
+  ROI_HEADS:
+    # coco has 80 classes, but we only have 25 stroke classes
+    NUM_CLASSES: 25 # default 80
+DATALOADER:
+  NUM_WORKERS: 8 # default 4, too slow
+INPUT:
+  FORMAT: BGR
+  MASK_FORMAT: polygon
+  MAX_SIZE_TEST: 144
+  MAX_SIZE_TRAIN: 144
+  MIN_SIZE_TEST: 112
+  MIN_SIZE_TRAIN: [ 112, 120 ]
+SOLVER:
+  STEPS: [ 210000, 250000 ] # default [210000, 250000]
+  MAX_ITER: 270000 # default 270000
+  WARMUP_ITERS: 1000 # default 1000
+  CHECKPOINT_PERIOD: 5000 # default 5000
+  IMS_PER_BATCH: 4 # default 16
+  BASE_LR: 0.02 # default 0.02
+TEST:
+  EVAL_PERIOD: 5000 # default 0, means no evaluation will be performed
+VIS_PERIOD: 5000 # default 0, means no visualization will be performed
+DATASETS:
+  TRAIN: ("chinese_stroke_2021_train",)
+  TEST: ("chinese_stroke_2021_val",)
+# the following fields are additionally added to init the env, set output log, and register dataset...
+GPU_IDS: [ 2 ] # env related fields
+# output log are other files related fields
+OUTPUT_ID: mask_rcnn_R_50_FPN_3x_kaiti_noisy_test
+OUTPUT_DIR: /mnt/cephfs/dataset/SIS_exp/liulizhao
+# dataset registration related fields
+#DATA_ROOT: /mnt/cephfs/dataset/noisy_kaiti_chinese_stroke_2021/
+DATA_ROOT: /mnt/cephfs/dataset/noisy_kaiti_chinese_stroke_2021/
+TRAIN_JSON_NAME: instances_train2021.json
+VAL_JSON_NAME: instances_val2021.json
+DATASET_NAME: chinese_stroke_2021
+TRAIN_IMAGE_DIR: train2021
+VAL_IMAGE_DIR: val2021
+IMAGE_PATHS: # default None, means not visualizing
+  - 'resources/styles/hei_preprocessed.jpg'
+  - 'resources/styles/kai_preprocessed.jpg'
+  - 'resources/styles/song_preprocessed.jpg'
+  - 'resources/styles/HandwrittenChineseStroke_train_0000000005.jpg'
+  - 'resources/styles/HandwrittenChineseStroke_train_0000000009.jpg'
+  - 'resources/styles/KaitiChineseStroke_train_000000000019.jpg'
+  - 'resources/styles/KaitiChineseStroke_train_000000000020.jpg'
+  - 'resources/styles/ChineseStroke_train_000000000003_1.jpg'
