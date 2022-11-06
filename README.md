@@ -36,15 +36,15 @@ Note: Both datasets are annotated with the standard COCO format.
 
 ## Datasets visualization
 
-<img src="fig/CCSE-main-dataset.png" align="center" width="400px">
+<div align=center><img src="fig/CCSE-main-dataset.png" align="center" width="300px"></div>
 
 ## Datasets Statistics
 
-<img src="fig/CCSE-dataset-stat1.png" align="center" width="900px">
+<div align=center><img src="fig/CCSE-dataset-stat1.png" align="center" width="900px"></div>
 
-<img src="fig/CCSE-dataset-stat2.png" align="center" width="300px">
+<div align=center><img src="fig/CCSE-dataset-stat2.png" align="center" width="300px"></div>
 
-<img src="fig/CCSE-dataset-stat3.png" align="center" width="300px">
+<div align=center><img src="fig/CCSE-dataset-stat3.png" align="center" width="300px"></div>
 
 ## How to use?
 - Install required package
@@ -104,11 +104,11 @@ All commands are recorded in terminal_new.record file. Go check out.
 
 ## Quantitative Results
 
-<img src="fig/CCSE-main-result.png" align="center">
+<div align=center><img src="fig/CCSE-main-result.png" align="center" width="350px"></div>
 
 ## Qualitative Results
 
-<img src="fig/CCSE-main-vis-result.png" align="center">
+<div align=center><img src="fig/CCSE-main-vis-result.png" align="center" width="350px"></div>
 
 
 ## Acknowledgement
