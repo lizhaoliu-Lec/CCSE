@@ -55,29 +55,45 @@ Note: Both datasets are annotated with the standard COCO format.
   pip install -r requirements.txt
   ```
 
-- Config related environments field
+- Config related environments field for the used config files below
   - Set the ``DATA_ROOT`` to your datasets placing path
   - Set the ``GPU_IDS`` to your machine GPU IDs. Support multiple GPU, for example ``[0, 1]``. 
-- To train a model
-```bash
-# template
-PYTHONPATH=$PYTHONPATH:./ python -u scripts/{your_train_script}.py --config {path_to_your_train_config}/{your_train_config}.yaml
-# a example
-PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x.yaml
-```
+  - Set the ``OUTPUT_ID`` to your experiment name.
+  - Set the ``OUTPUT_DIR``. The output files (checkpoint, log, tensorboard) are located at ``OUTPUT_DIR``/``OUTPUT_ID``/{timestamp}/
 
-- To inference (or test) a model
-```bash
-# template
-PYTHONPATH=$PYTHONPATH:./ python -u scripts/{your_inference_script}.py --config {path_to_your_inference_config}/{your_inference_config}.yaml
-# a example
-PYTHONPATH=$PYTHONPATH:./ python -u scripts/inference_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_test.yaml
-```
+- Train a model
+  - Template
+  ```bash
+  PYTHONPATH=$PYTHONPATH:./ python -u scripts/{your_train_script}.py --config {path_to_your_train_config}/{your_train_config}.yaml
+  ```
+  - To train a handwritten Chinese stroke instance segmentation model
+  ```bash
+  PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_handwritten.yaml
+  ```
+  - To train a kaiti Chinese stroke instance segmentation model
+  ```bash
+  PYTHONPATH=$PYTHONPATH:./ python -u scripts/train_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_kaiti.yaml
+  ```
 
-- In default, the output files (checkpoint, log, tensorboard) are located at output/{your_output_id}/{timestamp}/
+- Inference (or test) a model
+  - Set the ``MODEL.WEIGHTS`` to your trained ckpt path
+  - Optional: Set ``IMAGE_PATHS`` for individual image results visualization
+  - Optional: Set ``VIS_DATASET_RESULT`` for val/test results visualization
+  - Template
+  ```bash
+  PYTHONPATH=$PYTHONPATH:./ python -u scripts/{your_inference_script}.py --config {path_to_your_inference_config}/{your_inference_config}.yaml
+  ```
+  - To inference a handwritten Chinese stroke instance segmentation model
+  ```bash
+  PYTHONPATH=$PYTHONPATH:./ python -u scripts/inference_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_handwritten_test.yaml
+  ```
+  - To inference a kaiti Chinese stroke instance segmentation model
+  ```bash
+  PYTHONPATH=$PYTHONPATH:./ python -u scripts/inference_instance.py --config config/instance_segmentation/mask_rcnn_R_50_FPN_3x_kaiti_test.yaml
+  ```
+- Monitor the training process
 ```bash
-# To monitor the training process
-cd output/
+cd ``OUTPUT_DIR`` # your output dir
 tensorboard --logdir=./ --port=6006 --bind_all
 ```
 
