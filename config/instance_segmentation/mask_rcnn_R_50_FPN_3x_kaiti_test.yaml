@@ -39,14 +39,14 @@ VAL_JSON_NAME: instances_test2021.json
 TRAIN_IMAGE_DIR: train2021
 VAL_IMAGE_DIR: val2021
 VIS_DATASET_RESULT: true # whether to visualize the dataset results
-NUM_VIS_PROPOSAL: 50 # number of proposal to visualize
-# <========= put the path of any images you want to visualize here ===========>
-IMAGE_PATHS: # default None, means not visualizing
-  - 'resources/styles/hei_preprocessed.jpg'
-  - 'resources/styles/kai_preprocessed.jpg'
-  - 'resources/styles/song_preprocessed.jpg'
-  - 'resources/styles/HandwrittenChineseStroke_train_0000000005.jpg'
-  - 'resources/styles/HandwrittenChineseStroke_train_0000000009.jpg'
-  - 'resources/styles/KaitiChineseStroke_train_000000000019.jpg'
-  - 'resources/styles/KaitiChineseStroke_train_000000000020.jpg'
-  - 'resources/styles/ChineseStroke_train_000000000003_1.jpg'
+#NUM_VIS_PROPOSAL: 50 # number of proposal to visualize
+## <========= put the path of any images you want to visualize here ===========>
+#IMAGE_PATHS: # default None, means not visualizing
+#  - 'resources/styles/hei_preprocessed.jpg'
+#  - 'resources/styles/kai_preprocessed.jpg'
+#  - 'resources/styles/song_preprocessed.jpg'
+#  - 'resources/styles/HandwrittenChineseStroke_train_0000000005.jpg'
+#  - 'resources/styles/HandwrittenChineseStroke_train_0000000009.jpg'
+#  - 'resources/styles/KaitiChineseStroke_train_000000000019.jpg'
+#  - 'resources/styles/KaitiChineseStroke_train_000000000020.jpg'
+#  - 'resources/styles/ChineseStroke_train_000000000003_1.jpg'
