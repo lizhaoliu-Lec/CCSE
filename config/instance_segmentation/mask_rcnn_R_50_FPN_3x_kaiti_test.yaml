@@ -38,7 +38,7 @@ VAL_JSON_NAME: instances_test2021.json
 # <========= binary test dataset ===========>
 TRAIN_IMAGE_DIR: train2021
 VAL_IMAGE_DIR: val2021
-VIS_DATASET_RESULT: true # whether to visualize the dataset results
+VIS_DATASET_RESULT: True # whether to visualize the dataset results
 #NUM_VIS_PROPOSAL: 50 # number of proposal to visualize
 ## <========= put the path of any images you want to visualize here ===========>
 #IMAGE_PATHS: # default None, means not visualizing
